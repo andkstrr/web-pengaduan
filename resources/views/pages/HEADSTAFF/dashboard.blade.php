@@ -57,7 +57,7 @@
     </div>
 
     <script>
-        const labels = ['Pengaduan', 'Tanggapan'];
+        const labels = ['Pengaduan'];
         const data = {
             labels: labels,
             datasets: [
