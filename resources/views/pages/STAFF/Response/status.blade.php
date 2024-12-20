@@ -59,9 +59,15 @@
                 <div class="card p-3">
                     <h5 class="fw-bold mb-3">Progress Perbaikan</h5>
                     <div class="timeline-line">
-                        <div class="timeline-item">
-                            <p class="mb-1"><b></b> </p>
-                        </div>
+                        @if($reports->responseProgress)
+                            @foreach($reports->responseProgress->histories as $history)
+                                <div class="timeline-item">
+                                    <p class="mb-1">{{ $history['description'] }} <small class="text-muted">({{ \Carbon\Carbon::parse($history['created_at'])->format('d F Y') }})</small></p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No progress data available.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -76,10 +82,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('responses.store', $reports->id) }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label class="form-label">Deskripsi Progress</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="description" required></textarea>
+                            <input type="hidden" name="response_id" value="{{ $reports->id }}">
                         </div>
                         <button type="submit" class="btn btn-success justify-content-end">Simpan</button>
                     </form>

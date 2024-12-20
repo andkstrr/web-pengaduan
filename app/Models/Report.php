@@ -19,6 +19,11 @@ class Report extends Model
         return $this->hasOne(Response::class, 'report_id');
     }
 
+    public function responseProgress() {
+        // Mendefinisikan bahwa Report dapat memiliki banyak ResponseProgress
+        return $this->hasOne(ResponseProgress::class, 'response_id');
+    }
+
     public function comments() {
         // Mendefinisikan bahwa Report dapat memiliki banyak Comment
         return $this->hasMany(Comment::class);

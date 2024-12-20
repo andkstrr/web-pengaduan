@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('response_progress', function (Blueprint $table) {
             $table->id(); // -> Primary Key
-            $table->foreignId('response_id')->constrained()->cascadeOnDelete(); // Melakukan relasi ke table Response
-            $table->json('histories');
+            $table->foreignId('response_id')->constrained('reports')->cascadeOnDelete(); // Melakukan relasi ke table Response
+            $table->json('histories')->nullable();
             $table->timestamps();
         });
     }

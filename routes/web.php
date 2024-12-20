@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\HeadStaffController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Middleware\isNotLogin;
 use App\Http\Middleware\isStaff;
 use App\Http\Middleware\isHeadStaff;
+use PhpOffice\PhpSpreadsheet\Chart\ChartColor;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +60,8 @@ Route::middleware(['isLogin'])->group (function() {
     });
 
     Route::prefix('headstaff')->name('headstaff.')->group(function() {
-        Route::get('/dashboard', [HeadStaffController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [ChartController::class, 'index'])->name('dashboard');
+        Route::get('/account-staff', [HeadStaffController::class, 'index'])->name('account-staff');
         Route::post('/account-store', [HeadStaffController::class, 'store'])->name('store');
         Route::delete('/account-delete/{id}', [HeadStaffController::class, 'delete'])->name('delete');
     });
@@ -77,8 +80,8 @@ Route::middleware(['isStaff'])->group (function() {
         Route::get('/export/date', [StaffController::class, 'exportByDate'])->name('export-date');
         // Menindaklanjuti Response
         Route::get('/status/{id}', [StaffController::class, 'showStatus'])->name('status');
-        // Set Response Status
-        Route::get('/setstatus/{id}', [ResponseController::class, 'setStatus'])->name('setstatus');
+        // Menambahkan Progress
+        Route::post('/addprogress/{id}', [StaffController::class, 'store'])->name('store');
     });
 });
 

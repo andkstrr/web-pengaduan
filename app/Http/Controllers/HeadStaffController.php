@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\ReportsChart;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ class HeadStaffController extends Controller
     public function index()
     {
         $staffs = User::where('role', 'STAFF')->get();
-        return view('pages.headstaff.dashboard', compact('staffs'));
+        return view('pages.headstaff.account', compact('staffs'));
     }
 
     public function store(Request $request)
@@ -28,12 +29,12 @@ class HeadStaffController extends Controller
             'role' => 'STAFF',
         ]);
 
-        return redirect()->route('headstaff.dashboard')->with('success', 'Staff berhasil ditambahkan!');
+        return redirect()->route('headstaff.account-staff')->with('success', 'Staff berhasil ditambahkan!');
     }
 
     public function reset($id)
     {
-        
+
 
         User::where('id', $id)->update([
             'password' => Hash::make('password'),
@@ -43,6 +44,6 @@ class HeadStaffController extends Controller
     public function delete($id)
     {
         User::where('id', $id)->delete();
-        return redirect()->route('headstaff.dashboard')->with('success', 'Staff berhasil dihapus!');
+        return redirect()->route('headstaff.account-staff')->with('success', 'Staff berhasil dihapus!');
     }
 }
